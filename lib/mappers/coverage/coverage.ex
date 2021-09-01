@@ -37,7 +37,7 @@ defmodule Mappers.Coverage do
 
                 %{}
                 |> Map.put(:h3_id, nil)
-                |> Map.put(:state, "not mapped")
+                |> Map.put(:state, "not_mapped")
                 |> Map.put(:best_rssi, avg_rssi)
                 |> Map.put(:snr, avg_snr)
                 |> Map.put(
