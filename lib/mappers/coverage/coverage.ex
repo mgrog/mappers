@@ -113,12 +113,8 @@ defmodule Mappers.Coverage do
         }
 
     nearby_uplinks = Repo.all(query_uplinks)
-    IO.inspect(nearby_hexes)
-    %{nearby_hexes: nearby_hexes, nearby_uplinks: nearby_uplinks}
-  end
 
-  def distance_between_h3(origin, dest) do
-    :h3.grid_distance(origin, dest)
+    %{nearby_hexes: nearby_hexes, nearby_uplinks: nearby_uplinks}
   end
 
   def distance_to_nearest_uplink(origin, uplinks) do
