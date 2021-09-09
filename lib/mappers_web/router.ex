@@ -32,7 +32,7 @@ defmodule MappersWeb.Router do
     get "/uplinks/hex/:h3_index", API.V1.UplinkController, :get_uplinks
   end
 
-  scope "/api/v1/public", MappersWeb do
+  scope "/api/v1", MappersWeb do
     pipe_through :api
     pipe_through :allow_cors
 
