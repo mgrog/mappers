@@ -57,7 +57,7 @@ defmodule Mappers.Coverage do
                 distance_from_nearest_uplink(origin, uplinks)
               )
               |> Map.put(:uplinks_in_area, uplinks)
-              |> Map.put(:covered, false)
+              |> Map.put(:covered, usable_signal?(h3.best_rssi, h3.snr))
           end
 
       {:error, reason} ->
@@ -158,13 +158,17 @@ defmodule Mappers.Coverage do
 
     cond do
       nearest_uplink_dist < avg_dist ->
-        %{rssi: avg_rssi, snr: avg_snr, coverage: avg_rssi > -120}
+        %{rssi: avg_rssi, snr: avg_snr, coverage: usable_signal?(avg_rssi, avg_snr)}
 
       nearest_uplink_dist > avg_dist ->
         diff_dist = nearest_uplink_dist - avg_dist
         estimate = avg_rssi - path_loss(diff_dist, 915, 3, 3)
-        %{rssi: estimate, snr: avg_snr, coverage: estimate > -120}
+        %{rssi: estimate, snr: avg_snr, coverage: usable_signal?(avg_rssi, avg_snr)}
     end
+  end
+
+  def usable_signal?(rssi, snr) do
+    rssi > -120 && snr > -20
   end
 
   def point_distance(origin, dest) do
